@@ -49,18 +49,18 @@ public class ImportedFromChina implements IBot{
 
     private Node selectPromisingNode(Node node) {
         while (!node.getChildren().isEmpty()) {
-            node = getBestNodeUCB1(node);
+            node = getBestNode(node);
         }
         return node;
     }
 
 
-    private Node getBestNodeUCB1(Node node) {
+    private Node getBestNode(Node node) {
         int totalParentVisits = node.getVisits();
         Node bestNode = null;
         double maxUCB1 = Double.MIN_VALUE;
         for (Node child : node.getChildren()) {
-            double ucb1Value = calculateUCB1(totalParentVisits, child.getVisits(), child.getScore());
+            double ucb1Value = calculate(totalParentVisits, child.getVisits(), child.getScore());
             if (ucb1Value > maxUCB1) {
                 maxUCB1 = ucb1Value;
                 bestNode = child;
@@ -70,7 +70,7 @@ public class ImportedFromChina implements IBot{
     }
 
 
-    private double calculateUCB1(int totalVisits, int nodeVisits, double nodeScore) {
+    private double calculate(int totalVisits, int nodeVisits, double nodeScore) {
         if (nodeVisits == 0) {
             return Double.MAX_VALUE;
         }
